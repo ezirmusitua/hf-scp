@@ -1,10 +1,10 @@
 import resolve from '@rollup/plugin-node-resolve';
 
 export default {
-  input: 'src/index.js',
+  input: 'src/app.js',
   output: {
     file: 'bundle.js',
-    format: 'cjs',
+    format: 'iife',
   },
   plugins: [
     resolve(),
