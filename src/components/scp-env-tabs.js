@@ -8,9 +8,9 @@
 ${styles}
 <div class="envs-tab">
   <mwc-tab-bar>
-    <mwc-tab label="dev"></mwc-tab>
-    <mwc-tab label="staging"></mwc-tab>
-    <mwc-tab label="production"></mwc-tab>
+    {{#envs}}
+    <mwc-tab label="{{name}}"></mwc-tab>
+    {{/envs}}
   </mwc-tab-bar>
 </div>
 `;
@@ -20,10 +20,29 @@ ${styles}
    **/
   class SCPEnvTabs extends HTMLElement {
     /**
+     * constructor
+     **/
+    constructor() {
+      super();
+      this.name = 'scp_env_tabs';
+    }
+    /**
      * connectedCallback
      **/
     connectedCallback() {
-      this.innerHTML = html;
+      this.render({
+        envs: [
+          {name: 'dev'}, {name: 'staging'}, {name: 'production'},
+        ],
+      });
+      window.$scp_component[this.name] = this;
+    }
+    /**
+     * render
+     * @param {object} data
+    **/
+    render(data) {
+      this.innerHTML = window.Mustache.render(html, data);
     }
   }
 

@@ -64,20 +64,45 @@ ${styles}`;
     ],
   };
   /**
-   * SCPChannelList
+   * SCPPeerDetail
    **/
   class SCPPeerDetail extends HTMLElement {
+    /**
+     * constructor
+     **/
+    constructor() {
+      super();
+      this.name = 'scp_peer_detail';
+      this.data = {};
+    }
+
+    /**
+     * trigger
+     * @param {String} componentName
+     * @param {object} payload
+     **/
+    async trigger(componentName, payload) {
+      if (componentName === 'scp_peer_list' && payload.selectedPeer) {
+        this.data = {
+          ...MockPeerDetailData,
+        };
+        this.render();
+      }
+    }
+
     /**
      * lifecycle: connected
      **/
     connectedCallback() {
+      window.$scp_component[this.name] = this;
       this.render();
     }
+
     /**
      * render
      **/
     render() {
-      this.innerHTML = window.Mustache.render(html, MockPeerDetailData);
+      this.innerHTML = window.Mustache.render(html, this.data);
     }
   }
 

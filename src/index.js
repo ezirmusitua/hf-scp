@@ -2,8 +2,7 @@
   const styles = '<link rel="stylesheet" type="text/css"' +
 'href="./src/styles/main.css"></style>';
 
-  const html = `
-  <div class="outer">
+  const html = `<div class="outer">
     <article class="main-container">
       <scp-env-tabs></scp-env-tabs>
       <section class="content-container">
@@ -21,10 +20,18 @@ ${styles}
    **/
   class SCPMain extends HTMLElement {
     /**
+     * constructor
+     **/
+    constructor() {
+      super();
+      this.name = 'scp_main';
+    }
+    /**
      * lifecycle: connected
      **/
     connectedCallback() {
       this.innerHTML = html;
+      window.$scp_component[this.name]= this;
     }
   }
 
