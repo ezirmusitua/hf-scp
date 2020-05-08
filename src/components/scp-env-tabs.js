@@ -1,17 +1,16 @@
 (function() {
-  // const styles = '<link rel="stylesheet" type="text/css"' +
-  // 'href="./src/styles/peer-list.css"></link>';
-
-  const styles = '';
+  const styles = '<link rel="stylesheet" type="text/css"' +
+  'href="./src/styles/env-tabs.css"></link>';
 
   const html = `
 ${styles}
-<div class="envs-tab">
-  <mwc-tab-bar>
+<div class="env-tabs">
     {{#envs}}
-    <mwc-tab label="{{name}}"></mwc-tab>
+    <div class="tab-container"
+      onclick="$scp_component.scp_env_tabs.selectEnv('{{name}}')">
+      <span>{{name}}</span>
+    </div>
     {{/envs}}
-  </mwc-tab-bar>
 </div>
 `;
 
@@ -27,22 +26,37 @@ ${styles}
       this.name = 'scp_env_tabs';
     }
     /**
+     * init
+     **/
+    async init() {
+      this.data = await window.EnvList.fetch();
+      console.log(this.data);
+      this.render();
+    }
+
+    /**
+     * selectEnv
+     * @param {String} env
+     **/
+    selectEnv(env) {
+      console.log('click')
+      window.dispatchStateChange(this, {env});
+    }
+
+    /**
      * connectedCallback
      **/
     connectedCallback() {
-      this.render({
-        envs: [
-          {name: 'dev'}, {name: 'staging'}, {name: 'production'},
-        ],
-      });
       window.$scp_component[this.name] = this;
+      this.init();
     }
+
     /**
      * render
      * @param {object} data
     **/
-    render(data) {
-      this.innerHTML = window.Mustache.render(html, data);
+    render() {
+      this.innerHTML = window.Mustache.render(html, this.data);
     }
   }
 

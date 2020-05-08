@@ -15,6 +15,9 @@
       import '@material/mwc-textfield';
       import '@material/mwc-icon';
       import 'mustache';
+      window.Config = {
+        resourceBase: 'localhost'
+      };
       window['$scp_state'] = {};
       window['$scp_component'] = {};
       window.dispatchStateChange = (component, payload) => {
@@ -36,6 +39,9 @@
       // import components
       const head = document.querySelector('head');
       [
+        './src/resources.js',
+        './src/models/Channel.js',
+        './src/models/Peer.js',
         './src/components/scp-env-tabs.js', 
         './src/components/scp-channel-list.js',
         './src/components/scp-peer-list.js', 

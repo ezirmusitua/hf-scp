@@ -28,40 +28,8 @@
 ${styles}
 `;
 
-  const MockPeerListData = {
-    orgs: [
-      {
-        orgName: 'Org1',
-        peers: [
-          {
-            host: 'peer0.org1.example.com',
-            port: 7050,
-          },
-          {
-            host: 'peer1.org1.example.com',
-            port: 7051,
-          },
-        ],
-      },
-      {
-        orgName: 'Org2',
-        peers: [
-          {
-            id: '1',
-            host: 'peer0.org2.example.com',
-            port: 7050,
-          },
-          {
-            id: '2',
-            host: 'peer1.org2.example.com',
-            port: 7051,
-          },
-        ],
-      },
-    ],
-  };
   /**
-   * SCPChannelList
+   * SCPPeerList
    **/
   class SCPPeerList extends HTMLElement {
     /**
@@ -70,9 +38,7 @@ ${styles}
     constructor() {
       super();
       this.name = 'scp_peer_list';
-      this.data = {
-        selectedPeer: '',
-      };
+      this.data = {};
     }
 
     /**
@@ -81,13 +47,10 @@ ${styles}
      * @param {object} payload
      **/
     async trigger(componentName, payload) {
-      if (componentName === 'scp_channel_list' && payload.selectedChannel) {
-        console.log(1);
-        this.data = {
-          selectedPeer: '',
-          ...MockPeerListData,
-        };
+      if (componentName === 'scp_channel_list' && payload.channel) {
+        this.data = await window.PeerList.fetch(payload);
         this.render();
+        this.selectPeer(this.data.orgs[0].peers[0].id);
       }
     }
 
@@ -96,8 +59,11 @@ ${styles}
      * @param {String} peerId
      **/
     selectPeer(peerId) {
-      this.data.selectedPeer = peerId;
-      window.dispatchStateChange(this, {selectedPeer: peerId});
+      window.dispatchStateChange(this, {
+        peerId,
+        channel: this.data.channel,
+        env: this.data.env,
+      });
     }
 
     /**
@@ -105,7 +71,6 @@ ${styles}
      **/
     connectedCallback() {
       window.$scp_component[this.name] = this;
-      this.render();
     }
 
     /**

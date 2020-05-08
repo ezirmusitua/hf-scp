@@ -14,7 +14,6 @@
       {{#channels}}
       <!-- TODO: how to set event -->
       <mwc-list-item 
-        selected
         onclick="$scp_component.scp_channel_list.selectChannel('{{name}}')">
         <p class="list-item-label" >{{name}}</p>
       </mwc-list-item>
@@ -23,20 +22,6 @@
     </mwc-list>
   ${styles}
 </section>`;
-  const MockChannelListData = {
-    channels: [
-      {
-        name: 'mychannel',
-      },
-      {
-        name: 'channel-1',
-      },
-      {
-        name: 'channel-2',
-      },
-    ],
-  };
-
   /**
    * SCPChannelList
    **/
@@ -47,17 +32,26 @@
     constructor() {
       super();
       this.name = 'scp_channel_list';
-      this.data = {
-        selectedChannel: '',
-        ...MockChannelListData,
-      };
+      this.data = {};
     }
+    /**
+     * trigger
+     * @param {String} componentName
+     * @param {object} payload
+     **/
+    async trigger(componentName, payload) {
+      if (componentName === 'scp_env_tabs' && payload.env) {
+        this.data = await window.ChannelList.fetch(payload);
+        this.render();
+        this.selectChannel(this.data.channels[0].name);
+      }
+    }
+
     /**
      * lifecycle: connected
      **/
     connectedCallback() {
       window.$scp_component[this.name] = this;
-      this.render();
     }
 
     /**
@@ -72,7 +66,10 @@
      * @param {String} channelName
      **/
     selectChannel(channelName) {
-      window.dispatchStateChange(this, {selectedChannel: channelName});
+      window.dispatchStateChange(this, {
+        env: this.data.env,
+        channel: channelName,
+      });
     }
   }
 
