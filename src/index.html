@@ -7,23 +7,26 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
+body {
+  margin: 0;
+  padding: 0;
+}
       p, h1, h2, h3, span, b, span, i {
         color: #eaeaea;
         margin: 0;
       }
+
       .outer {
         display: flex;
         justify-content: center;
         background-color: #f1f1f1;
       }
+
       .main-container {
         width: 66%;
         min-width: 1080px;
       }
+
       .content-container {
         display: flex;
         margin-top: 16px;
@@ -32,26 +35,34 @@
         background-color: #e1e1e1;
         border-radius: 6px;
         box-shadow: #272839 0px 4px 12px;
+        box-sizing: border-box;
+        max-height: calc(100vh - 120px);
       }
+
       .list-header h3 {
         font-size: 20px;
         font-weight: bold;
         margin: 4px 12px;
       }
+
       .input-container {
         height: 40px;
         background-color: transparent;
         position: relative;
         box-sizing: border-box;
       }
+
       .input-container input {
         background-color: transparent;
         border: none;
         border-bottom: 1px solid #ffffff;
-        padding: 0 32px 0 16px;
         height: 100%;
+        width: 100%;
         color: #fafafa;
+        box-sizing: border-box;
+        padding: 0 32px 0 16px;
       }
+
       .input-container button {
         border-radius: 50%;
         width: 32px;
@@ -61,21 +72,33 @@
         position: absolute;
         right: 0;
       }
+
       .list-item-label {
         font-size: 16px;
         word-break: break-all;
         font-weight: bold;
       }
+
       .channel-list-container {
         flex-basis: 15%;
         background-color: #11a1e1;
         border-top-left-radius: 6px;
         border-bottom-left-radius: 6px;
       }
+
       .peer-list-container {
         flex-basis: 20%;
         background-color: #1191e2;
       }
+
+      .peer-list-org-container .list-header h3 {
+        font-size: 16px;
+      }
+
+      .peer-list-org-container .list-item {
+        padding-left: 16px;
+      }
+
       .peer-detail-container {
         flex-basis: 65%;
         display: flex;
@@ -87,158 +110,240 @@
 
       .peer-detail-information {
         height: 80px;
-        padding: 12px;
+        padding: 20px;
         background: #1171e3;
         border-radius: 6px;
         margin-bottom: 12px;
         box-shadow: #272839 0px 2px 6px;
       }
+
       .peer-detail-chaincode-action {
-        height: 48px;
+        height: 120px;
         background: #1171e3;
         border-radius: 6px;
         margin-bottom: 12px;
         box-shadow: #272839 0px 2px 6px;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 4px 8px;
+        flex-wrap: wrap;
+        padding: 20px;
       }
 
+      .peer-detail-chaincode-action h3, .peer-detail-chaincode-list h3 {
+        flex-basis: 100%;
+        font-szie: 20px;
+        font-weight: bold;
+      }
+      .peer-detail-chaincode-list h3 {
+        padding: 20px 20px 8px 20px;
+      }
+
+      .peer-detail-chaincode-action .chaincode-name {
+        flex: 4;
+        margin-right: 8px;
+      }
+      .peer-detail-chaincode-action .chaincode-version {
+        flex: 3;
+        margin-right: 8px;
+      }
+      .peer-detail-chaincode-action .chaincode-path {
+        flex: 5;
+      }
       .peer-detail-chaincode-action button {
+        flex-basis: 100%;
         border: none;
         border-radius: 4px;
         color: #eaeaea;
         font-size: 20px;
         font-weight: bold;
         background-color: #11aff1;
+        margin-top: 8px;
         height: 40px;
-        margin-left: 20px;
       }
+
       .peer-detail-chaincode-list {
         flex: 1;
         background: #1171e3;
         border-radius: 6px;
         margin-bottom: 12px;
         box-shadow: #272839 0px 2px 6px;
+        max-height: calc(100vh - 500px);
+        overflow-y: scroll;
       }
 
       .peer-detail-chaincode-list-item {
       }
+
     </style>
   </head>
   <body>
-    <mwc-top-app-bar-fixed>
-      <mwc-icon-button icon="menu" slot="navigationIcon"></mwc-icon-button>
-      <div slot="title">SCP</div>
-      <!-- <mwc-icon-button icon="file_download" slot="actionItems"></mwc-icon-button> -->
-      <!-- <mwc-icon-button icon="print" slot="actionItems"></mwc-icon-button> -->
-      <!-- <mwc-icon-button icon="favorite" slot="actionItems"></mwc-icon-button> -->
-    </mwc-top-app-bar-fixed>
-
     <div class="outer">
       <article class="main-container">
-      <div class="envs-tab">
-        <mwc-tab-bar>
-          <mwc-tab label="dev"></mwc-tab>
-          <mwc-tab label="staging"></mwc-tab>
-          <mwc-tab label="production"></mwc-tab>
-        </mwc-tab-bar>
-      </div>
-      <section class="content-container">
-        <section class="channel-list-container">
-          <mwc-list>
-            <section class="list-header">
-              <h3>Channel List</h3>
-              <div class="input-container">
-                <input placeholder="Search Channel">
-                <button>S</button>
-              </div>
-            </section>
-            <li divider role="separator"></li>
-            <mwc-list-item>
-              <p class="list-item-label">mychannel</p>
-            </mwc-list-item>
-            <li divider role="separator"></li>
-            <mwc-list-item>
-              <p class="list-item-label">dcsjjy</p>
-            </mwc-list-item>
-            <li divider role="separator"></li>
-            <mwc-list-item>
-              <p class="list-item-label">fangyou-saas</p>
-            </mwc-list-item>
-          </mwc-list>
-        </section>
-        <section class="peer-list-container">
-          <mwc-list>
-            <section class="list-header">
-              <h3>Peer List</h3>
-              <div class="input-container">
-                <input placeholder="Search Channel">
-                <button>S</button>
-              </div>
-            </section>
-            <li divider role="separator"></li>
-            <mwc-list-item>
-              <p class="list-item-label">peer0.org1.example.com</p>
-            </mwc-list-item>
-            <li divider role="separator"></li>
-            <mwc-list-item>
-              <p class="list-item-label">peer1.org1.example.com</p>
-            </mwc-list-item>
-            <li divider role="separator"></li>
-            <mwc-list-item>
-              <p class="list-item-label">peer0.org2.example.com</p>
-            </mwc-list-item>
-            <li divider role="separator"></li>
-            <mwc-list-item>
-              <p class="list-item-label">peer1.org2.example.com</p>
-            </mwc-list-item>
-          </mwc-list>
-        </section>
-        <section class="peer-detail-container">
-          <div class="peer-detail-information">
-            <h3>peer0.org1.example.com</h3>
-            <p>This is the description of peer</p>
 
-          </div>
-          <div class="peer-detail-chaincode-action">
-            <div class="input-container">
-              <input placeholder="path/to/chaincode">
-            </div>
-            <button class="deploy-button">Deploy</button>
-          </div>
-          <div class="peer-detail-chaincode-list">
+        <div class="envs-tab">
+          <mwc-tab-bar>
+            <mwc-tab label="dev"></mwc-tab>
+            <mwc-tab label="staging"></mwc-tab>
+            <mwc-tab label="production"></mwc-tab>
+          </mwc-tab-bar>
+        </div>
+
+        <section class="content-container">
+          <section class="channel-list-container">
             <mwc-list>
+              <section class="list-header">
+                <h3>Channel List</h3>
+              </section>
+              <li divider role="separator"></li>
               <mwc-list-item>
-                <p class="list-item-label">universal-0.3.1-dev.1</p>
+                <p class="list-item-label">mychannel</p>
               </mwc-list-item>
               <li divider role="separator"></li>
               <mwc-list-item>
-                <p class="list-item-label">universal-0.3.1-dev.1</p>
+                <p class="list-item-label">dcsjjy</p>
               </mwc-list-item>
               <li divider role="separator"></li>
               <mwc-list-item>
-                <p class="list-item-label">universal-0.3.1-dev.1</p>
-              </mwc-list-item>
-              <li divider role="separator"></li>
-              <mwc-list-item>
-                <p class="list-item-label">universal-0.3.1-dev.1</p>
-              </mwc-list-item>
-              <li divider role="separator"></li>
-              <mwc-list-item>
-                <p class="list-item-label">universal-0.3.1-dev.1</p>
-              </mwc-list-item>
-              <li divider role="separator"></li>
-              <mwc-list-item>
-                <p class="list-item-label">universal-0.3.1-dev.1</p>
+                <p class="list-item-label">fangyou-saas</p>
               </mwc-list-item>
             </mwc-list>
-          </div>
+          </section>
+
+          <section class="peer-list-container">
+            <div class="peer-list-org-container">
+              <mwc-list>
+                <section class="list-header">
+                  <h3>Org1 Peer List</h3>
+                </section>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">peer0.org1.example.com</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">peer1.org1.example.com</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+              </mwc-list>
+            </div>
+
+            <div class="peer-list-org-container">
+              <mwc-list>
+                <section class="list-header">
+                  <h3>Org2 Peer List</h3>
+                </section>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">peer0.org2.example.com</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">peer1.org2.example.com</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+              </mwc-list>
+            </div>
+          </section>
+
+          <section class="peer-detail-container">
+            <div class="peer-detail-information">
+              <h3>peer0.org1.example.com</h3>
+              <p>This is the description of peer</p>
+            </div>
+
+            <div class="peer-detail-chaincode-action">
+              <h3>Deploy Chaincode For Organization1</h3>
+              <div class="input-container chaincode-name">
+                <input placeholder="name of chaincode">
+              </div>
+              <div class="input-container chaincode-version">
+                <input placeholder="version of chaincode">
+              </div>
+              <div class="input-container chaincode-path">
+                <input placeholder="path/to/chaincode">
+              </div>
+              <button class="deploy-button">Deploy</button>
+            </div>
+
+            <div class="peer-detail-chaincode-list">
+              <h3>Deploy Chaincode For Organization1</h3>
+              <mwc-list>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+                <mwc-list-item>
+                  <div class="list-item">
+                    <p class="list-item-label">universal-0.3.1-dev.1</p>
+                  </div>
+                </mwc-list-item>
+                <li divider role="separator"></li>
+
+              </mwc-list>
+            </div>
+
+          </section>
         </section>
-      </section>
       </article>
     </div>
+
     <!-- Use Web Components in your HTML like regular built-in elements. -->
     <!-- The Material Web Components use standard JavaScript modules. -->
     <script type="module">
