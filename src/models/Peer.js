@@ -50,6 +50,30 @@
     }
 
     /**
+     * select
+     * @param {String} peerId
+     **/
+    select(peerId) {
+      this.orgs = this.orgs.map((org) => ({
+        ...org,
+        peers: org.peers.map((peer) => {
+          console.log(peer.id, peerId, peer.id === peerId);
+          if (peer.id === peerId) {
+            peer.host = '* ' + peer.host;
+            return peer;
+          }
+          if (peer.host.startsWith('*')) {
+            peer.host = peer.host.slice(2);
+            return peer;
+          }
+          return peer;
+        }),
+      }));
+      console.log(this.orgs);
+    }
+
+
+    /**
      * fetch
      * @param {object} payload
      **/

@@ -12,6 +12,22 @@
     }
 
     /**
+     * select
+     * @param {String} env
+     **/
+    select(env) {
+      this.envs = this.envs.map(({name}) => {
+        if (name === env) {
+          return {name: `* ${name}`};
+        }
+        if (name.startsWith('*')) {
+          return {name: name.slice(2)};
+        }
+        return {name};
+      });
+    }
+
+    /**
      * fetch
      **/
     static async fetch() {
@@ -55,6 +71,23 @@
       this.env = env;
       this.channels = channels.map((channel) => new Channel(channel.name, env));
     }
+
+    /**
+     * select
+     * @param {String} channel
+     **/
+    select(channel) {
+      this.channels = this.channels.map(({name}) => {
+        if (name === channel) {
+          return {name: `* ${name}`};
+        }
+        if (name.startsWith('*')) {
+          return {name: name.slice(2)};
+        }
+        return {name};
+      });
+    }
+
 
     /**
      * fetch

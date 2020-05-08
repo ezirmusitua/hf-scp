@@ -39,7 +39,7 @@ ${styles}
      * @param {String} env
      **/
     selectEnv(env) {
-      console.log('click')
+      this.data.select(env);
       window.dispatchStateChange(this, {env});
     }
 

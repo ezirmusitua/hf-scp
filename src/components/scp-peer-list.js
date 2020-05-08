@@ -59,6 +59,7 @@ ${styles}
      * @param {String} peerId
      **/
     selectPeer(peerId) {
+      this.data.select(peerId);
       window.dispatchStateChange(this, {
         peerId,
         channel: this.data.channel,

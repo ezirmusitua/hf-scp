@@ -66,6 +66,7 @@
      * @param {String} channelName
      **/
     selectChannel(channelName) {
+      this.data.select(channelName);
       window.dispatchStateChange(this, {
         env: this.data.env,
         channel: channelName,
