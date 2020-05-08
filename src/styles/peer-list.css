@@ -1,0 +1,15 @@
+.peer-list-container {
+  flex-basis: 20%;
+  background-color: #1191e2;
+  height: 100%;
+}
+
+.peer-list-org-container .list-header h3 {
+  font-size: 16px;
+}
+
+.peer-list-org-container .list-item {
+  padding-left: 16px;
+}
+
+

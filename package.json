@@ -30,7 +30,8 @@
     "@material/mwc-tab-bar": "^0.15.0",
     "@material/mwc-textfield": "^0.15.0",
     "@material/mwc-top-app-bar-fixed": "^0.15.0",
-    "@webcomponents/webcomponentsjs": "^2.4.3"
+    "@webcomponents/webcomponentsjs": "^2.4.3",
+    "mustache": "^4.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^7.1.3",

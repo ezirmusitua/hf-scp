@@ -1,0 +1,9 @@
+.channel-list-container {
+  flex-basis: 15%;
+  height: 100%;
+  background-color: #11a1e1;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+

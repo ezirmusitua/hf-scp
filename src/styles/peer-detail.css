@@ -1,0 +1,73 @@
+
+.peer-detail-container {
+  flex-basis: 65%;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 32px;
+}
+
+.peer-detail-information {
+  height: 80px;
+  padding: 20px;
+  background: #1171e3;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: #272839 0px 2px 6px;
+}
+
+.peer-detail-chaincode-action {
+  height: 120px;
+  background: #1171e3;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: #272839 0px 2px 6px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.peer-detail-chaincode-action h3, .peer-detail-chaincode-list h3 {
+  flex-basis: 100%;
+  font-szie: 20px;
+  font-weight: bold;
+}
+.peer-detail-chaincode-list h3 {
+  padding: 20px 20px 8px 20px;
+}
+
+.peer-detail-chaincode-action .chaincode-name {
+  flex: 4;
+  margin-right: 8px;
+}
+.peer-detail-chaincode-action .chaincode-version {
+  flex: 3;
+  margin-right: 8px;
+}
+.peer-detail-chaincode-action .chaincode-path {
+  flex: 5;
+}
+.peer-detail-chaincode-action button {
+  flex-basis: 100%;
+  border: none;
+  border-radius: 4px;
+  color: #eaeaea;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #11aff1;
+  margin-top: 8px;
+  height: 40px;
+}
+
+.peer-detail-chaincode-list {
+  flex: 1;
+  background: #1171e3;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: #272839 0px 2px 6px;
+  max-height: calc(100vh - 500px);
+  overflow-y: scroll;
+}
+
+
