@@ -1,114 +1,87 @@
-(function() {
-  /**
-   * EnvList
-   **/
-  window.EnvList = class EnvList {
-    /**
-     * constructor
-     * @param {Array} envs
-     **/
-    constructor(envs) {
-      this.envs = envs;
-    }
+import { getResource } from "../resources";
+import { Config } from "../config";
+export class EnvList {
+  constructor(envs) {
+    this.currentEnv = "";
+    this.envs = envs;
+  }
 
-    /**
-     * select
-     * @param {String} env
-     **/
-    select(env) {
-      this.envs = this.envs.map(({name}) => {
-        if (name === env) {
-          return {name: `* ${name}`};
-        }
-        if (name.startsWith('*')) {
-          return {name: name.slice(2)};
-        }
-        return {name};
-      });
-    }
-
-    /**
-     * fetch
-     **/
-    static async fetch() {
-      if (window.Config.resourceBase === 'localhost') {
-        return new EnvList([
-          {name: 'dev'},
-          {name: 'staging'},
-          {name: 'production'},
-        ]);
+  select(env) {
+    if (this.currentEnv === env) return;
+    this.currentEnv = env;
+    this.envs = this.envs.map((envObj) => {
+      const selected = envObj.name.startsWith("*");
+      const shouldSelect = envObj.name === env;
+      if (shouldSelect && selected) return envObj;
+      if (shouldSelect && !selected) {
+        envObj.name = `* ${envObj.name}`;
       }
-      const url = `${window.Config.resourceBase}/env`;
-      return new EnvList(payload.env, await window.getResource(url));
-    }
-  };
-
-  /**
-   * Channel
-   **/
-  window.Channel = class Channel {
-    /**
-     * constructor
-     * @param {String} name
-     * @param {String} env
-     **/
-    constructor(name, env) {
-      this.name = name;
-      this.env = env;
-    }
-  };
-
-  /**
-   * ChannelList
-   **/
-  window.ChannelList = class ChannelList {
-    /**
-     * constructor
-     * @param {String} env
-     * @param {Array} channels
-     **/
-    constructor(env, channels = []) {
-      this.env = env;
-      this.channels = channels.map((channel) => new Channel(channel.name, env));
-    }
-
-    /**
-     * select
-     * @param {String} channel
-     **/
-    select(channel) {
-      this.channels = this.channels.map(({name}) => {
-        if (name === channel) {
-          return {name: `* ${name}`};
-        }
-        if (name.startsWith('*')) {
-          return {name: name.slice(2)};
-        }
-        return {name};
-      });
-    }
-
-
-    /**
-     * fetch
-     * @param {object} payload
-     **/
-    static async fetch(payload) {
-      if (window.Config.resourceBase === 'localhost') {
-        return new ChannelList(payload.env, [
-          {
-            name: 'mychannel',
-          },
-          {
-            name: 'channel-1',
-          },
-          {
-            name: 'channel-2',
-          },
-        ]);
+      if (selected) {
+        envObj.name = envObj.name.slice(2);
       }
-      const url = `${window.Config.resourceBase}/channel?env=${env}`;
-      return new ChannelList(payload.env, await window.getResource(url));
+      return envObj;
+    });
+  }
+
+  static async fetch() {
+    if (Config.resourceBase === "localhost") {
+      return new EnvList([
+        { name: "dev" },
+        { name: "staging" },
+        { name: "production" },
+      ]);
     }
-  };
-})();
+    const url = `${Config.resourceBase}/env`;
+    return new EnvList(payload.env, await getResource(url));
+  }
+}
+
+export class Channel {
+  constructor(name, env) {
+    this.name = name;
+    this.env = env;
+  }
+}
+
+export class ChannelList {
+  constructor(env, channels = []) {
+    this.env = env;
+    this.channels = channels.map((channel) => new Channel(channel.name, env));
+    this.selectedChannel = "";
+  }
+
+  select(channel) {
+    if (this.selectedChannel === channel) return;
+    this.channels = this.channels.map((channel) => {
+      const selected = name.startsWith("*");
+      const shouldSelect = name === channel;
+      if (shouldSelect && selected) return channel;
+      if (shouldSelect && !selected) {
+        channel.name = `* ${name}`;
+      }
+      if (selected) {
+        channel.name = name.slice(2);
+      }
+      return channel;
+    });
+  }
+
+  static async fetch(payload) {
+    // if (this.env === payload.env) return;
+    if (Config.resourceBase === "localhost") {
+      return new ChannelList(payload.env, [
+        {
+          name: "mychannel",
+        },
+        {
+          name: "channel-1",
+        },
+        {
+          name: "channel-2",
+        },
+      ]);
+    }
+    const url = `${Config.resourceBase}/channel?env=${env}`;
+    return new ChannelList(payload.env, await getResource(url));
+  }
+}

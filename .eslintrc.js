@@ -5,6 +5,7 @@ module.exports = {
   },
   'extends': [
     'google',
+    'prettier',
   ],
   'globals': {
     'Atomics': 'readonly',
@@ -15,5 +16,9 @@ module.exports = {
     'sourceType': 'module',
   },
   'rules': {
+    'require-jsdoc': 'off',
+    // 'quotes': ['error', 'double'],
+    // 'object-curly-spacing': 'off',
+    // 'space-before-function-paren': 'off',
   },
 };

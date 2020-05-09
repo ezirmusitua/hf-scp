@@ -1,62 +1,41 @@
-import '@webcomponents/webcomponentsjs';
-import '@material/mwc-button';
-import '@material/mwc-list/mwc-list.js';
-import '@material/mwc-list/mwc-list-item.js';
-import '@material/mwc-top-app-bar-fixed';
-import '@material/mwc-tab-bar';
-import '@material/mwc-tab';
-import '@material/mwc-textfield';
-import '@material/mwc-icon';
-import 'mustache';
-import {SCPMain} from './components/scp-main';
+import "@material/mwc-list/mwc-list.js";
+import "@material/mwc-list/mwc-list-item.js";
+import { snakeCase } from "snake-case";
+import { SCPMain } from "./components/scp-main";
+import { SCPChannelList } from "./components/scp-channel-list";
+import { SCPEnvTabs } from "./components/scp-env-tabs";
+import { SCPPeerList } from "./components/scp-peer-list";
+import { SCPPeerDetail } from "./components/scp-peer-detail";
 
-window.Config = {
-  resourceBase: 'localhost',
-};
-
-window['$scp_state'] = {};
-
-window['$scp_component'] = {};
+// global state change event handler
+window["$scp_state"] = {};
+window["$scp_component"] = {};
 
 window.dispatchStateChange = (component, payload) => {
-  const event = document.createEvent('Event');
-  event.initEvent('state_change_render', true, true);
+  const event = document.createEvent("Event");
+  event.initEvent("state_change_render", true, true);
   event.payload = payload;
   component.dispatchEvent(event);
 };
-
-// global state change event handler
-window.addEventListener('state_change_render', (res) => {
+window.addEventListener("state_change_render", (res) => {
   res.target.render();
   Object.keys(window.$scp_component).forEach((componentName) => {
     if (window.$scp_component[componentName].trigger) {
       window.$scp_component[componentName].trigger(
-          res.target.name,
-          res.payload,
+        res.target.name,
+        res.payload
       );
     }
   });
-  // window.$scp_component.render({selectedChannel: res.payload});
 });
 
-// import components
-// const head = document.querySelector('head');
-// [
-// './src/resources.js',
-// './src/models/Channel.js',
-// './src/models/Peer.js',
-// './src/components/scp-env-tabs.js',
-// './src/components/scp-channel-list.js',
-// './src/components/scp-peer-list.js',
-// './src/components/scp-peer-detail.js',
-// './src/index.js',
-// ].forEach((p) => {
-// const script = document.createElement('script');
-// script.src = p;
-// head.appendChild(script);
-// });
+// register custom elements
+[SCPPeerDetail, SCPPeerList, SCPEnvTabs, SCPChannelList, SCPMain].forEach(
+  (ce) => {
+    console.log(ce.name, snakeCase(ce.name).replace(/_/g, "-"));
+    customElements.define(snakeCase(ce.name).replace(/_/g, "-"), ce);
+  }
+);
 
-const main = document.createElement(SCPMain.name);
-
-document.querySelector('body').appendChild(main);
-
+const app = document.createElement(snakeCase(SCPMain.name).replace(/_/g, "-"));
+document.querySelector("body").appendChild(app);
