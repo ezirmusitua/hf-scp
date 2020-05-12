@@ -1,2 +1,3 @@
 .SpaceVim.d
 node_modules
+dist/bundle.js

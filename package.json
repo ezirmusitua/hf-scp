@@ -34,7 +34,11 @@
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.11.0",
+    "gulp": "^4.0.2",
+    "gulp-rollup": "^2.17.0",
     "prettier": "^2.0.5",
-    "rollup": "^2.8.2"
+    "rollup": "^2.8.2",
+    "rollup-stream": "^1.24.1",
+    "vinyl-source-stream": "^2.0.0"
   }
 }
