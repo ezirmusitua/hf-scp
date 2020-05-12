@@ -32,7 +32,6 @@ window.addEventListener("state_change_render", (res) => {
 // register custom elements
 [SCPPeerDetail, SCPPeerList, SCPEnvTabs, SCPChannelList, SCPMain].forEach(
   (ce) => {
-    console.log(ce.name, snakeCase(ce.name).replace(/_/g, "-"));
     customElements.define(snakeCase(ce.name).replace(/_/g, "-"), ce);
   }
 );
